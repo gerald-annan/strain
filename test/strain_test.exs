@@ -27,7 +27,6 @@ defmodule StrainTest do
     assert Strain.keep(words, &String.starts_with?(&1, "z")) == ~w(zebra zombies zelot)
   end
 
-  @tag :pending
   test "keep arrays" do
     rows = [
       [1, 2, 3],
