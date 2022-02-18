@@ -7,7 +7,9 @@ defmodule Strain do
   """
   @spec keep(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def keep(list, fun) do
-    Enum.filter(list, fun)
+    for elem <- list,
+        fun.(elem) == true,
+        do: elem
   end
 
   @doc """
@@ -18,5 +20,8 @@ defmodule Strain do
   """
   @spec discard(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def discard(list, fun) do
+    for elem <- list,
+        fun.(elem) == false,
+        do: elem
   end
 end
