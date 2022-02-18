@@ -7,6 +7,7 @@ defmodule Strain do
   """
   @spec keep(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def keep(list, fun) do
+    Enum.filter(list, fun)
   end
 
   @doc """
