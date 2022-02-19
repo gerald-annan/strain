@@ -7,14 +7,14 @@ defmodule Strain do
   """
   @spec keep(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def keep(list, fun) do
-    filter(list, fun, [])
+    keep_filter(list, fun, [])
   end
 
-  def filter([hd | tl], fun, acc) do
-    if fun.(hd), do: filter(tl, fun, acc ++ [hd]), else: filter(tl, fun, acc)
+  def keep_filter([hd | tl], fun, acc) do
+    if fun.(hd), do: keep_filter(tl, fun, acc ++ [hd]), else: keep_filter(tl, fun, acc)
   end
 
-  def filter(_, _, acc), do: acc
+  def keep_filter(_, _, acc), do: acc
 
   @doc """
   Given a `list` of items and a function `fun`, return the list of items where
@@ -24,5 +24,12 @@ defmodule Strain do
   """
   @spec discard(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def discard(list, fun) do
+    discard_filter(list, fun, [])
   end
+
+  def discard_filter([hd | tl], fun, acc) do
+    if !fun.(hd), do: discard_filter(tl, fun, acc ++ [hd]), else: discard_filter(tl, fun, acc)
+  end
+
+  def discard_filter(_, _, acc), do: acc
 end
