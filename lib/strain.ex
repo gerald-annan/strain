@@ -7,14 +7,20 @@ defmodule Strain do
   """
   @spec keep(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def keep(list, fun) do
-    keep_filter(list, fun, [])
+    filter(:keep, list, fun, [])
   end
 
-  def keep_filter([hd | tl], fun, acc) do
-    if fun.(hd), do: keep_filter(tl, fun, acc ++ [hd]), else: keep_filter(tl, fun, acc)
+  def filter(type, [hd | tl], fun, acc) do
+    case type do
+      :keep ->
+        if fun.(hd), do: filter(type, tl, fun, acc ++ [hd]), else: filter(type, tl, fun, acc)
+
+      _ ->
+        if !fun.(hd), do: filter(type, tl, fun, acc ++ [hd]), else: filter(type, tl, fun, acc)
+    end
   end
 
-  def keep_filter(_, _, acc), do: acc
+  def filter(_, _, _, acc), do: acc
 
   @doc """
   Given a `list` of items and a function `fun`, return the list of items where
@@ -24,12 +30,6 @@ defmodule Strain do
   """
   @spec discard(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def discard(list, fun) do
-    discard_filter(list, fun, [])
+    filter(:discard, list, fun, [])
   end
-
-  def discard_filter([hd | tl], fun, acc) do
-    if !fun.(hd), do: discard_filter(tl, fun, acc ++ [hd]), else: discard_filter(tl, fun, acc)
-  end
-
-  def discard_filter(_, _, acc), do: acc
 end
