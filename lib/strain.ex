@@ -7,9 +7,17 @@ defmodule Strain do
   """
   @spec keep(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def keep(list, fun) do
-    for elem <- list,
-        fun.(elem) == true,
-        do: elem
+    filter(list, fun, [])
+  end
+
+  def filter(list, fun, acc) do
+    case list do
+      [hd | tl] ->
+        if fun.(hd) == true, do: filter(tl, fun, acc ++ [hd]), else: filter(tl, fun, acc)
+
+      _ ->
+        acc
+    end
   end
 
   @doc """
@@ -20,8 +28,5 @@ defmodule Strain do
   """
   @spec discard(list :: list(any), fun :: (any -> boolean)) :: list(any)
   def discard(list, fun) do
-    for elem <- list,
-        fun.(elem) == false,
-        do: elem
   end
 end
