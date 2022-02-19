@@ -10,15 +10,11 @@ defmodule Strain do
     filter(list, fun, [])
   end
 
-  def filter(list, fun, acc) do
-    case list do
-      [hd | tl] ->
-        if fun.(hd), do: filter(tl, fun, acc ++ [hd]), else: filter(tl, fun, acc)
-
-      _ ->
-        acc
-    end
+  def filter([hd | tl], fun, acc) do
+    if fun.(hd), do: filter(tl, fun, acc ++ [hd]), else: filter(tl, fun, acc)
   end
+
+  def filter(_, _, acc), do: acc
 
   @doc """
   Given a `list` of items and a function `fun`, return the list of items where
