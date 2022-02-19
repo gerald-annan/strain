@@ -10,7 +10,7 @@ defmodule Strain do
     filter(:keep, list, fun, [])
   end
 
-  def filter(type, [hd | tl], fun, acc) do
+  defp filter(type, [hd | tl], fun, acc) do
     case type do
       :keep ->
         if fun.(hd), do: filter(type, tl, fun, acc ++ [hd]), else: filter(type, tl, fun, acc)
@@ -20,7 +20,7 @@ defmodule Strain do
     end
   end
 
-  def filter(_, _, _, acc), do: acc
+  defp filter(_, _, _, acc), do: acc
 
   @doc """
   Given a `list` of items and a function `fun`, return the list of items where
