@@ -13,7 +13,7 @@ defmodule Strain do
   def filter(list, fun, acc) do
     case list do
       [hd | tl] ->
-        if fun.(hd) == true, do: filter(tl, fun, acc ++ [hd]), else: filter(tl, fun, acc)
+        if fun.(hd), do: filter(tl, fun, acc ++ [hd]), else: filter(tl, fun, acc)
 
       _ ->
         acc
